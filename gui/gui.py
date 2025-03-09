@@ -14,19 +14,19 @@ class QRCodeGUI:
         self.url_entry.insert(0, "https://www.sample.com")
         self.url_entry.grid(row=0, column=1, padx=5, pady=5)
 
-        # 📝 出力ファイル名入力エリア
+        # 📝 出力ファイル名を指定
         tk.Label(master, text="QRコードのファイル名:").grid(row=1, column=0, padx=5, pady=5, sticky="e")
         self.filename_entry = tk.Entry(master, width=50)
         self.filename_entry.insert(0, "qrcode.png")
         self.filename_entry.grid(row=1, column=1, padx=5, pady=5)
 
-        # 🎨 塗りつぶし色選択エリア（カラーパレット or RGB）
+        # 🎨 QRコード自体の色を指定
         tk.Label(master, text="QRコードの色を指定:").grid(row=2, column=0, padx=5, pady=5, sticky="e")
         self.fill_color = "#000000"  # 初期値：黒
         self.fill_color_button = tk.Button(master, text=self.fill_color, bg=self.fill_color, command=self.choose_fill_color, width=10)
         self.fill_color_button.grid(row=2, column=1, padx=5, pady=5, sticky="w")
 
-        # 🎨 背景色選択エリア（カラーパレット or RGB）
+        # 🎨 背景色を指定
         tk.Label(master, text="背景色を指定:").grid(row=3, column=0, padx=5, pady=5, sticky="e")
         self.back_color = "#ffffff"  # 初期値：白
         self.back_color_button = tk.Button(master, text=self.back_color, bg=self.back_color, command=self.choose_back_color, width=10)
@@ -37,14 +37,12 @@ class QRCodeGUI:
         self.generate_button.grid(row=4, column=0, columnspan=2, padx=5, pady=10)
 
     def choose_fill_color(self):
-        # カラーパレットから塗りつぶし色を選択
         color_code = colorchooser.askcolor(title="Choose fill color", initialcolor=self.fill_color)
         if color_code[1]:
             self.fill_color = color_code[1]
             self.fill_color_button.config(text=self.fill_color, bg=self.fill_color)
 
     def choose_back_color(self):
-        # カラーパレットから背景色を選択
         color_code = colorchooser.askcolor(title="Choose back color", initialcolor=self.back_color)
         if color_code[1]:
             self.back_color = color_code[1]
@@ -57,7 +55,6 @@ class QRCodeGUI:
             messagebox.showerror("Input Error", "URLと出力ファイル名は必須です。")
             return
 
-        # qr_generatorモジュールからQRコード生成を呼び出す
         img = generate_qr_code(
             url, 
             self.fill_color, 
